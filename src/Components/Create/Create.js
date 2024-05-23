@@ -8,14 +8,19 @@ import Header from '../Header/Header';
 const Create = () => {
   
   const [name,setname] = useState('')
+
+  
   const [category,setcategory] = useState('')
+
   const [price, setprice] = useState('')
+  const [description,setDescription] = useState('')
+
   const [image, setimage] = useState(null)
   const {firebase}=useContext(FirebaseContext)
   const {user}=useContext(AuthContext)
  const firestore=getFirestore(firebase)
  const date = new Date().toDateString();
- const navigate=useNavigate()
+ const navigate = useNavigate()
 
   
  const handleSubmit= async()=>{
@@ -25,8 +30,11 @@ const Create = () => {
   }
   try{
     const storage = getStorage();
+    console.log(1, storage)
     const storageRef = ref(storage, `/images/${image.name}`);
+    console.log(2 , storageRef)
     const snapshot=await uploadBytes(storageRef, image)
+    console.log(3, snapshot)
     const imageURL = await getDownloadURL(snapshot.ref);
     const productsCollection = collection(firestore, "products");
     await setDoc(doc(productsCollection), {
@@ -34,6 +42,7 @@ const Create = () => {
      category,
      price,
      imageURL,
+     description,
      createdAt:date.toString(),
      userId:user.uid
     });
@@ -62,6 +71,19 @@ const Create = () => {
               defaultValue="John"
             />
             <br />
+            <label htmlFor="fname">Description</label>
+            <br />
+            <input
+            value={description}
+            onChange={(e)=>setDescription(e.target.value)}
+              className="input"
+              type="text"
+              id="fname"
+              name="des"
+              defaultValue="John"
+            />
+            <br />
+
             <label htmlFor="fname">Category</label>
             <br />
             <input
@@ -74,6 +96,8 @@ const Create = () => {
               defaultValue="John"
             />
             <br />
+
+
             <label htmlFor="fname">Price</label>
             <br />
             <input value={price} onChange={(e)=>setprice(e.target.value)} className="input" type="number" id="fname" name="Price" />

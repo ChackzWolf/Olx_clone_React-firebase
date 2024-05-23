@@ -1,33 +1,33 @@
-import React,{useState,useContext} from 'react';
+import React,{useState,/**useContext*/} from 'react';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {FirebaseContext} from '../../store/FirebaseContext'
+// import {FirebaseContext} from '../../store/FirebaseContext'
 import {useNavigate,Link} from 'react-router-dom'
 import Logo from '../../olx-logo.png';
 import './Login.css';
 
 function Login() {
-  const auth = getAuth();
-  const navigate=useNavigate()
-  const [email,setEmail]=useState('')
-  const [password,setpassword]=useState('')
-  const {firebase}=useContext(FirebaseContext)
-  const handleLogin=(e)=>{
-e.preventDefault();
-signInWithEmailAndPassword(auth, email, password)
-.then(() => {
-  navigate('/')
- })
- .catch((error) => {
-   const errorMessage = error.message;
-   console.log(error.code,errorMessage);
-   alert('Invalid Credentials');
- });
-  }
+    const auth = getAuth();
+    const navigate = useNavigate()
+    const [email,setEmail] = useState('')
+    const [password,setpassword] = useState('')
+    // const {firebase} = useContext(FirebaseContext)            _//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\_
+    const handleLogin=(e)=>{
+        e.preventDefault();
+        signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            navigate('/')
+        })
+         .catch((error) => {
+            const errorMessage = error.message;
+            console.log(error.code,errorMessage);
+            alert('Invalid Credentials');
+        });
+    }
 
   return (
     <div>
       <div className="loginParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+        <img width="200px" height="200px" src={Logo} alt='kkk'/>
         <form onSubmit={handleLogin}>
           <label htmlFor="fname">Email</label>
           <br />

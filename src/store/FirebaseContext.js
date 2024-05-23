@@ -1,8 +1,12 @@
 import {createContext,useState} from 'react'
-export const FirebaseContext=createContext(null)
-export const AuthContext=createContext(null)
+import 'firebase/storage'
+
+export const FirebaseContext = createContext(null)
+
+export const AuthContext = createContext(null)
+
   
-export default function Context({children}){
+export default function Context({children}){  //destructuring props 'children'
     const [user,setUser]=useState(null)
     return (
         <AuthContext.Provider value={{user,setUser}}>
